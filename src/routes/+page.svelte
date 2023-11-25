@@ -1,2 +1,14 @@
-<h1 class="bg-red-500">Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script lang="ts">
+	import { goto } from '$app/navigation';
+	async function login() {
+		const response = await fetch('http://localhost:8080/auth/github');
+		if (response.status == 200) {
+			const { url } = (await response.json()) as { url: string };
+			goto(url)
+		}
+	}
+</script>
+
+<button on:click={login}>
+	<h1>Login</h1>
+</button>
